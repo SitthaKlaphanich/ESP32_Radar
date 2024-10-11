@@ -1,19 +1,21 @@
 const char html_page[] PROGMEM = R"RawString(
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
+  <meta charset="UTF-8">
+  <title>ESP32 เรดาร์ ระบุระยะวัตถุ</title>
   <style>
-    body {font-family: sans-serif;}
+    body {font-family: 'Noto Sans Thai', sans-serif;}
     h1 {text-align: center; font-size: 50px;}
     p {text-align: center; color: #4CAF50; font-size: 40px;}
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.0/processing.min.js"></script>
-
 </head>
 <body>
-  <h1>Radar System Over Internet</h1><br>
-  <p>Distance : <span id="_CM">0</span> cm</p>
-  <p>Angle : <span id="_ANGLE">0</span> degree</p>
+  <h1>ESP32 เรดาร์ ระบุระยะวัตถุ</h1><br>
+  <p>ระยะทาง : <span id="_CM">0</span> ซม</p>
+  <p>มุม : <span id="_ANGLE">0</span> องศา</p>
 
 <script type="application/processing">
 String angle="";
