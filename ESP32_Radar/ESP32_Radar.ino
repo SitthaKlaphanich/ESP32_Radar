@@ -3,13 +3,16 @@
 #include <ESP32Servo.h>
 #include "html.h"
 
-const char* ssid = "E23OZK";
-const char* password = "AoRee1523";
+const char* ssid = "---";
+const char* password = "---";
 
 #define LED 2
 #define TrigPin 5
 #define EchoPin 18
+#define BUZZER_PIN 4  // กำหนดพินให้กับ buzzer
 #define SoundSpeed 0.034
+
+const float dangerDistance = 3.0; // ระยะห่างที่ต้องการให้มีการแจ้งเตือน (หน่วยเป็นเซนติเมตร)
 
 WebServer server(80);
 Servo servo;
@@ -42,7 +45,12 @@ void DistanceCalculator()
 
   long duration = pulseIn(EchoPin, HIGH);
   distance = duration * SoundSpeed / 2;
-
+  
+  if (distance < dangerDistance) {
+    digitalWrite(BUZZER_PIN, HIGH); // เปิด buzzer เมื่อระยะห่างน้อยกว่าค่าที่กำหนด
+  } else {
+    digitalWrite(BUZZER_PIN, LOW); // ปิด buzzer เมื่อระยะห่างมากกว่าหรือเท่ากับค่าที่กำหนด
+  }
 }
 
 void servoController() {
@@ -77,6 +85,7 @@ void setup()
   servo.write(servoAngle);
   pinMode(TrigPin, OUTPUT);
   pinMode(EchoPin, INPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
   Serial.begin(115200);
   pinMode(LED, OUTPUT);
   WiFi.mode(WIFI_STA);    
