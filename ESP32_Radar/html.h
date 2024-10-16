@@ -1,19 +1,23 @@
 const char html_page[] PROGMEM = R"RawString(
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
+  <meta charset="UTF-8">
+  <title>ESP32 เรดาร์ ระบุระยะวัตถุ</title>
   <style>
-    body {font-family: sans-serif;}
+    body {font-family: 'Noto Sans Thai', sans-serif;}
     h1 {text-align: center; font-size: 50px;}
     p {text-align: center; color: #4CAF50; font-size: 40px;}
+    canvas {margin:auto; display: block;}
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.0/processing.min.js"></script>
-
 </head>
 <body>
-  <h1>Radar System Over Internet</h1><br>
-  <p>Distance : <span id="_CM">0</span> cm</p>
-  <p>Angle : <span id="_ANGLE">0</span> degree</p>
+  <h1>ESP32 เรดาร์ ระบุระยะวัตถุ</h1><br>
+  <p>ระยะทาง : <span id="_CM">0</span> ซม</p>
+  <p>มุม : <span id="_ANGLE">0</span> องศา</p>
+  
 
 <script type="application/processing">
 String angle="";
@@ -124,9 +128,9 @@ void drawText() {
   text("30cm",width-width*0.177,height-height*0.0833);
   text("40cm",width-width*0.0729,height-height*0.0833);
   textSize(40);
-  text("Radar", width-width*0.875, height-height*0.0277);
-  text("Angle: " + iAngle +" °", width-width*0.48, height-height*0.0277);
-  text("Distance: ", width-width*0.26, height-height*0.0277);
+  text("เรด้า", width-width*0.875, height-height*0.0277);
+  text("องศา: " + iAngle +" °", width-width*0.48, height-height*0.0277);
+  text("ระยะทาง: ", width-width*0.26, height-height*0.0277);
   if(iDistance<40) {
   text("              " + iDistance +" cm", width-width*0.225, height-height*0.0277);
   }

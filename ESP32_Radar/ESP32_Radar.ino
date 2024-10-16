@@ -3,8 +3,8 @@
 #include <ESP32Servo.h>
 #include "html.h"
 
-const char* ssid = "----";
-const char* password = "----";
+const char* ssid = "E23OZK";
+const char* password = "AoRee1523";
 
 #define LED 2
 #define TrigPin 5
