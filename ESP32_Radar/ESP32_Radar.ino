@@ -3,8 +3,8 @@
 #include <ESP32Servo.h>
 #include "html.h"
 
-const char* ssid = "---";
-const char* password = "---";
+const char* ssid = "----";
+const char* password = "----";
 
 #define LED 2
 #define TrigPin 5
@@ -105,6 +105,7 @@ void setup()
   Serial.println();
   Serial.print("Local IP: ");
   Serial.println(WiFi.localIP());
+  delay(7000);
   server.on("/", MainPage);
   server.on("/readDistance", Distance);
 
