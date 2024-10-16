@@ -20,8 +20,15 @@ const char html_page[] PROGMEM = R"RawString(
       color: #4CAF50;
       font-size: 50px;
       }
-    p {text-align: center; color: #4CAF50; font-size: 40px;}
-    canvas {margin:auto; display: block;}
+    p {
+      text-align: center; 
+      color: #4CAF50; 
+      font-size: 40px;
+      }
+    canvas {
+      margin:auto; 
+      display: block;
+      }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.0/processing.min.js"></script>
