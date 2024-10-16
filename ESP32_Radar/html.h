@@ -5,7 +5,16 @@ const char html_page[] PROGMEM = R"RawString(
   <meta charset="UTF-8">
   <title>ESP32 เรดาร์ ระบุระยะวัตถุ</title>
   <style>
-    body {font-family: 'Noto Sans Thai', sans-serif;}
+    body {
+      font-family: 'Noto Sans Thai', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #000;
+    }
     h1 {text-align: center; font-size: 50px;}
     p {text-align: center; color: #4CAF50; font-size: 40px;}
     canvas {margin:auto; display: block;}
