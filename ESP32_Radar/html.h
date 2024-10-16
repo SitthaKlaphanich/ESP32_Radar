@@ -15,7 +15,11 @@ const char html_page[] PROGMEM = R"RawString(
       margin: 0;
       background-color: #000;
     }
-    h1 {text-align: center; font-size: 50px;}
+    h1 {
+      text-align: center; 
+      color: #4CAF50;
+      font-size: 50px;
+      }
     p {text-align: center; color: #4CAF50; font-size: 40px;}
     canvas {margin:auto; display: block;}
   </style>
