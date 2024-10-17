@@ -38,6 +38,51 @@ const char html_page[] PROGMEM = R"RawString(
   <p>ระยะทาง : <span id="_CM">0</span> ซม</p>
   <p>มุม : <span id="_ANGLE">0</span> องศา</p>
   
+  <div>
+  <input type="number" id="buzzerDistance" placeholder="Enter Danger Distance (cm)">
+  <button onclick="setBuzzerDistance()">Set Buzzer Distance</button>
+</div>
+<br>
+<div>
+  <input type="number" id="servoAngle" placeholder="Enter Servo Angle (0-180)">
+  <button onclick="setServoAngle()">Set Servo Angle</button>
+</div>
+
+<script>
+function setBuzzerDistance() {
+  var distance = document.getElementById("buzzerDistance").value;
+  if (distance !== "") {  // ตรวจสอบว่ามีการป้อนค่าหรือไม่
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);  // แสดงผลการตอบสนองใน console
+      }
+    };
+    xhttp.open("GET", "/setBuzzerDistance?distance=" + distance, true);  // ใช้ /setBuzzerDistance
+    xhttp.send();
+  } else {
+    alert("Please enter a valid distance");
+  }
+}
+
+function setServoAngle() {
+  var angle = document.getElementById("servoAngle").value;
+  if (angle !== "") {  // ตรวจสอบว่ามีการป้อนค่าหรือไม่
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        console.log(this.responseText);  // แสดงผลการตอบสนองใน console
+      }
+    };
+    xhttp.open("GET", "/setAngle?angle=" + angle, true);  // ใช้ /setAngle
+    xhttp.send();
+  } else {
+    alert("Please enter a valid angle");
+  }
+}
+
+
+</script>
 
 <script type="application/processing">
 String angle="";
