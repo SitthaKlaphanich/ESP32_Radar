@@ -3,6 +3,7 @@ const char html_page[] PROGMEM = R"RawString(
 <html lang="th">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ESP32 เรดาร์ ระบุระยะวัตถุ</title>
   <style>
     body {
@@ -13,39 +14,59 @@ const char html_page[] PROGMEM = R"RawString(
       align-items: center;
       min-height: 100vh;
       margin: 0;
-      background-color: #000;
-      color: #4CAF50;
+      background: linear-gradient(180deg, #000, #555);
+      color: #ffffff;
     }
     h1 {
       text-align: center; 
-      font-size: 50px;
+      font-size: 60px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
     }
-    p {
-      text-align: center; 
-      font-size: 40px;
+    .data-display {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .data-display p {
+      font-size: 36px; /* ขนาดข้อความที่ใหญ่ขึ้น */
+      margin: 5px 0;
+      font-weight: bold; /* ทำให้ข้อความหนา */
+      color: #4CAF50; /* เปลี่ยนสีข้อความ */
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7); /* เพิ่มเงาให้ข้อความ */
     }
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       margin-top: 20px;
+      margin-bottom: 20px; 
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
     .button {
-      background-color: #4CAF50; /* สีพื้นหลังของปุ่ม */
-      border: none; /* ไม่แสดงกรอบ */
-      color: white; /* สีข้อความ */
-      padding: 15px 32px; /* ระยะห่างในปุ่ม */
-      text-align: center; /* จัดกึ่งกลางข้อความ */
-      text-decoration: none; /* ไม่มีเส้นใต้ */
-      display: inline-block; /* ให้ปุ่มแสดงในแนวนอน */
-      font-size: 20px; /* ขนาดข้อความ */
-      margin: 4px 2px; /* ระยะห่างระหว่างปุ่ม */
-      cursor: pointer; /* แสดง cursor เป็นมือ */
-      border-radius: 8px; /* มุมโค้งของปุ่ม */
-      transition: background-color 0.3s; /* เอฟเฟกต์การเปลี่ยนสี */
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 18px;
+      margin: 10px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
     .button:hover {
-      background-color: #45a049; /* เปลี่ยนสีเมื่อเลื่อนเมาส์ไปที่ปุ่ม */
+      background-color: #45a049;
+      transform: translateY(-2px);
     }
     .input-container {
       margin: 10px;
@@ -53,23 +74,25 @@ const char html_page[] PROGMEM = R"RawString(
     input[type="number"] {
       padding: 10px;
       font-size: 20px;
-      border: 2px solid #4CAF50; /* สีกรอบ */
-      border-radius: 5px; /* มุมโค้งของกล่องข้อความ */
-      width: 200px; /* กว้าง */
+      border: 2px solid #4CAF50;
+      border-radius: 5px;
+      width: 200px;
+      transition: border-color 0.3s;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
     }
     input[type="number"]:focus {
-      border-color: #45a049; /* สีกรอบเมื่อเลือก */
-      outline: none; /* ไม่มีกรอบเมื่อเลือก */
+      border-color: #45a049;
+      outline: none;
+      box-shadow: 0 0 5px rgba(72, 201, 176, 0.8);
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.0/processing.min.js"></script>
 </head>
 <body>
-  <h1>ESP32 เรดาร์ ระบุระยะวัตถุ</h1><br>
-  <p>ระยะทาง : <span id="_CM">0</span> ซม</p>
-  <p>มุม : <span id="_ANGLE">0</span> องศา</p>
-  
+  <h1>ESP32 เรดาร์ ระบุระยะวัตถุ</h1>
+
   <div class="container">
     <div class="input-container">
       <input type="number" id="buzzerDistance" placeholder="กำหนดระยะ (cm)">
@@ -80,6 +103,12 @@ const char html_page[] PROGMEM = R"RawString(
       <button class="button" onclick="setServoAngle()">เซ็ตองศา</button>
     </div>
   </div>
+  
+  <div class="data-display">
+    <p>ระยะทาง: <span id="_CM">0</span> ซม</p>
+    <p>มุม: <span id="_ANGLE">0</span> องศา</p>
+  </div>
+  
 
 <script>
 function setBuzzerDistance() {
@@ -94,7 +123,7 @@ function setBuzzerDistance() {
     xhttp.open("GET", "/setBuzzerDistance?distance=" + distance, true);  // ใช้ /setBuzzerDistance
     xhttp.send();
   } else {
-    alert("Please enter a valid distance");
+    alert("กรุณากรอกระยะทางที่ถูกต้อง");
   }
 }
 
@@ -110,7 +139,7 @@ function setServoAngle() {
     xhttp.open("GET", "/setAngle?angle=" + angle, true);  // ใช้ /setAngle
     xhttp.send();
   } else {
-    alert("Please enter a valid angle");
+    alert("กรุณากรอกองศาที่ถูกต้อง");
   }
 }
 
@@ -148,8 +177,8 @@ PFont orcFont;
 
 void setup() {
   
- size (1200, 700);
- smooth();
+  size (1200, 700);
+  smooth();
 
 }
 void draw() {
@@ -194,7 +223,7 @@ void drawObject() {
   pixsDistance = iDistance*((height-height*0.1666)*0.025);
 
   if(iDistance<40){
-  line(pixsDistance*cos(radians(iAngle)),-pixsDistance*sin(radians(iAngle)),(width-width*0.505)*cos(radians(iAngle)),-(width-width*0.505)*sin(radians(iAngle)));
+    line(pixsDistance*cos(radians(iAngle)),-pixsDistance*sin(radians(iAngle)),(width-width*0.505)*cos(radians(iAngle)),-(width-width*0.505)*sin(radians(iAngle)));
   }
   popMatrix();
 }
@@ -210,10 +239,10 @@ void drawText() {
   
   pushMatrix();
   if(iDistance>40) {
-  noObject = "Out of Range";
+    noObject = "Out of Range";
   }
   else {
-  noObject = "In Range";
+    noObject = "In Range";
   }
   fill(0,0,0);
   noStroke();
@@ -230,7 +259,7 @@ void drawText() {
   text("องศา: " + iAngle +" °", width-width*0.48, height-height*0.0277);
   text("ระยะทาง: ", width-width*0.26, height-height*0.0277);
   if(iDistance<40) {
-  text("              " + iDistance +" cm", width-width*0.225, height-height*0.0277);
+    text("              " + iDistance +" cm", width-width*0.225, height-height*0.0277);
   }
   textSize(25);
   fill(98,245,60);
