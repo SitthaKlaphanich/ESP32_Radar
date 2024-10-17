@@ -23,12 +23,13 @@ unsigned long currentMillis;
 int period = 80;
 int servoAngle = 90;
 bool servoDirection = true;
-
+bool buzzerState = false;
 
 void MainPage() {
   String _html_page = html_page;
   server.send(200, "text/html", _html_page);
 }
+
 
 void Distance() {
   String data = "[\""+String(distance)+"\",\""+String(servoAngle)+"\"]";
@@ -79,6 +80,23 @@ void servoController() {
   }
 }
 
+
+void setBuzzer() {
+    buzzerState = !buzzerState;
+    digitalWrite(BUZZER_PIN, buzzerState ? HIGH : LOW);
+    server.send(200, "text/plain", buzzerState ? "BUZZER ON" : "BUZZER OFF");
+}
+
+void setServoAngle() {
+    if (server.arg("angle") != "") {
+        servoAngle = server.arg("angle").toInt();
+        servo.write(servoAngle);
+        server.send(200, "text/plain", "Servo Angle set to " + String(servoAngle));
+    } else {
+        server.send(400, "text/plain", "Angle not provided");
+    }
+}
+
 void setup()
 {
   servo.attach(13);
@@ -105,8 +123,11 @@ void setup()
   Serial.println();
   Serial.print("Local IP: ");
   Serial.println(WiFi.localIP());
+  delay(7000);
   server.on("/", MainPage);
   server.on("/readDistance", Distance);
+  server.on("/setBuzzer", setBuzzer); 
+  server.on("/setAngle", setServoAngle); 
 
   server.begin();
 }
