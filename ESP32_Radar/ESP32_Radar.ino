@@ -3,8 +3,8 @@
 #include <ESP32Servo.h>
 #include "html.h"
 
-const char* ssid = "---";
-const char* password = "---";
+const char* ssid = "E23OZK";
+const char* password = "AoRee1523";
 
 #define LED 2
 #define TrigPin 5
@@ -12,7 +12,7 @@ const char* password = "---";
 #define BUZZER_PIN 4  // กำหนดพินให้กับ buzzer
 #define SoundSpeed 0.034
 
-const float dangerDistance = 3.0; // ระยะห่างที่ต้องการให้มีการแจ้งเตือน (หน่วยเป็นเซนติเมตร)
+float dangerDistance  ; // ระยะห่างที่ต้องการให้มีการแจ้งเตือน (หน่วยเป็นเซนติเมตร)
 
 WebServer server(80);
 Servo servo;
@@ -80,13 +80,14 @@ void servoController() {
   }
 }
 
-
-void setBuzzer() {
-    buzzerState = !buzzerState;
-    digitalWrite(BUZZER_PIN, buzzerState ? HIGH : LOW);
-    server.send(200, "text/plain", buzzerState ? "BUZZER ON" : "BUZZER OFF");
+void setBuzzerDistance() {
+    if (server.arg("distance") != "") { // ตรวจสอบว่ามีการส่งค่าระยะหรือไม่
+        dangerDistance = server.arg("distance").toFloat(); // แปลงค่าเป็น float
+        server.send(200, "text/plain", "Danger distance set to " + String(dangerDistance) + " cm"); // ส่งกลับไปยังไคลเอนต์
+    } else {
+        server.send(400, "text/plain", "Distance not provided"); // ถ้าไม่มีการส่งค่า
+    }
 }
-
 void setServoAngle() {
     if (server.arg("angle") != "") {
         servoAngle = server.arg("angle").toInt();
@@ -96,6 +97,7 @@ void setServoAngle() {
         server.send(400, "text/plain", "Angle not provided");
     }
 }
+
 
 void setup()
 {
@@ -126,7 +128,7 @@ void setup()
   delay(7000);
   server.on("/", MainPage);
   server.on("/readDistance", Distance);
-  server.on("/setBuzzer", setBuzzer); 
+  server.on("/setBuzzerDistance", setBuzzerDistance);
   server.on("/setAngle", setServoAngle); 
 
   server.begin();
