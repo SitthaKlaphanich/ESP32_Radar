@@ -3,8 +3,8 @@
 #include <ESP32Servo.h>
 #include "html.h"
 
-const char* ssid = "E23OZK";
-const char* password = "AoRee1523";
+const char* ssid = "----";
+const char* password = "----";
 
 #define LED 2
 #define TrigPin 5
@@ -56,9 +56,9 @@ void DistanceCalculator()
 
 void servoController() {
   currentMillis = millis();
-  if (servoAngle > 165)
+  if (servoAngle > 180)
     servoDirection = false;
-  else if (servoAngle <= 15)
+  else if (servoAngle <= 10)
     servoDirection = true;
 
   if (currentMillis - previousMillis >= period) {
