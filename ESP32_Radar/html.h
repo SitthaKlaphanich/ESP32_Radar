@@ -14,21 +14,53 @@ const char html_page[] PROGMEM = R"RawString(
       min-height: 100vh;
       margin: 0;
       background-color: #000;
+      color: #4CAF50;
     }
     h1 {
       text-align: center; 
-      color: #4CAF50;
       font-size: 50px;
-      }
+    }
     p {
       text-align: center; 
-      color: #4CAF50; 
       font-size: 40px;
-      }
-    canvas {
-      margin:auto; 
-      display: block;
-      }
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .button {
+      background-color: #4CAF50; /* สีพื้นหลังของปุ่ม */
+      border: none; /* ไม่แสดงกรอบ */
+      color: white; /* สีข้อความ */
+      padding: 15px 32px; /* ระยะห่างในปุ่ม */
+      text-align: center; /* จัดกึ่งกลางข้อความ */
+      text-decoration: none; /* ไม่มีเส้นใต้ */
+      display: inline-block; /* ให้ปุ่มแสดงในแนวนอน */
+      font-size: 20px; /* ขนาดข้อความ */
+      margin: 4px 2px; /* ระยะห่างระหว่างปุ่ม */
+      cursor: pointer; /* แสดง cursor เป็นมือ */
+      border-radius: 8px; /* มุมโค้งของปุ่ม */
+      transition: background-color 0.3s; /* เอฟเฟกต์การเปลี่ยนสี */
+    }
+    .button:hover {
+      background-color: #45a049; /* เปลี่ยนสีเมื่อเลื่อนเมาส์ไปที่ปุ่ม */
+    }
+    .input-container {
+      margin: 10px;
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 20px;
+      border: 2px solid #4CAF50; /* สีกรอบ */
+      border-radius: 5px; /* มุมโค้งของกล่องข้อความ */
+      width: 200px; /* กว้าง */
+    }
+    input[type="number"]:focus {
+      border-color: #45a049; /* สีกรอบเมื่อเลือก */
+      outline: none; /* ไม่มีกรอบเมื่อเลือก */
+    }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.0/processing.min.js"></script>
@@ -38,15 +70,16 @@ const char html_page[] PROGMEM = R"RawString(
   <p>ระยะทาง : <span id="_CM">0</span> ซม</p>
   <p>มุม : <span id="_ANGLE">0</span> องศา</p>
   
-  <div>
-  <input type="number" id="buzzerDistance" placeholder="Enter Danger Distance (cm)">
-  <button onclick="setBuzzerDistance()">Set Buzzer Distance</button>
-</div>
-<br>
-<div>
-  <input type="number" id="servoAngle" placeholder="Enter Servo Angle (0-180)">
-  <button onclick="setServoAngle()">Set Servo Angle</button>
-</div>
+  <div class="container">
+    <div class="input-container">
+      <input type="number" id="buzzerDistance" placeholder="กำหนดระยะ (cm)">
+      <button class="button" onclick="setBuzzerDistance()">เซ็ตระยะ</button>
+    </div>
+    <div class="input-container">
+      <input type="number" id="servoAngle" placeholder="กำหนดองศา (0-180)">
+      <button class="button" onclick="setServoAngle()">เซ็ตองศา</button>
+    </div>
+  </div>
 
 <script>
 function setBuzzerDistance() {

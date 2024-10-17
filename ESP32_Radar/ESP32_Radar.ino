@@ -56,9 +56,9 @@ void DistanceCalculator()
 
 void servoController() {
   currentMillis = millis();
-  if (servoAngle > 180)
+  if (servoAngle > 165)
     servoDirection = false;
-  else if (servoAngle <= 10)
+  else if (servoAngle <= 15)
     servoDirection = true;
 
   if (currentMillis - previousMillis >= period) {
